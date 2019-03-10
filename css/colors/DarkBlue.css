@@ -95,7 +95,7 @@ a.readmore:hover, a.readmore:focus, a.readmore:active {
 #contactform .submit, #comment_form .submit {
     background-color: #3B5998;
 }
-#profile .about i.glyphicon, #profile .about label {
+#profile  i.glyphicon, #profile .about label {
     color: #3B5998;
 }
 #section-title, #categories_sidebar ul.categories li a:hover {
@@ -164,7 +164,7 @@ h2.resp-accordion:hover .hi-icon, .no-touch .hi-icon-effect-5 .hi-icon:hover {
 #sidebar-right .search-blog i, #sidebar-left .search-blog i {
     background: #3B5998;
 }
-.icon-switcher {	
+.icon-switcher {
     color: #3B5998 !important;
 }
 .resp-tabs-list li {
@@ -180,7 +180,7 @@ h2.resp-accordion:hover .hi-icon, .no-touch .hi-icon-effect-5 .hi-icon:hover {
     background: #3B5998;
 }
 .widget-profil{
-    background: #3B5998;   
+    background: #3B5998;
 }
 .widget-profil .head-image{
     border: 10px solid #4c70ba;
@@ -192,10 +192,10 @@ h2.resp-accordion:hover .hi-icon, .no-touch .hi-icon-effect-5 .hi-icon:hover {
     color:#839ccf;
 }
 .widget-profil  h4 {
-    color:#839ccf; 
+    color:#839ccf;
 }
 .widget-profil  h6 {
-    color:#839ccf; 
+    color:#839ccf;
 }
 .widget-profil  p {
     color:#839ccf !important;

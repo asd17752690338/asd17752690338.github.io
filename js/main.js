@@ -57,8 +57,6 @@ jQuery(document).ready(function($) {
     dampen: 0.95,
     density: 5
   };
-  // flameMove();
-  showData(30); //当这个值越大,散列越开
 
   //将里面的文字像素开始
   function showData(n) { //此时是向外开始恢复过来
@@ -130,14 +128,32 @@ jQuery(document).ready(function($) {
     return Math.sqrt(Math.pow(Math.pow(x, 2) + y, 2));
   }
 
-
-    /*Page Preloading*/
-    // $(window).load(function() {
-    //       $('#spinner').fadeOut(200);
-    //       $('#preloader').delay(200).fadeOut('slow');
-    //       $('.wrapper').fadeIn(200);
-    //       $('#custumize-style').fadeIn(200);
-    // });
+  showData(30); //当这个值越大,散列越开,运行的越慢
+  // showContent();
+   $("#print").click(()=>{
+     $(".no-js").printThis({
+       debug: false,
+       importCSS: true,
+       importStyle: true,
+       printContainer: true,
+      loadCSS: "./css/main.css",
+      pageTitle: "",
+      removeInline: false,
+      removeInlineSelector: "*",
+      printDelay: 333,
+      header: null,
+      footer: null,
+      base: false,
+      formValues: true,
+      canvas: false,
+      doctypeString: '...',
+      removeScripts: false,
+      copyTagClasses: false,
+      beforePrintEvent: null,
+      beforePrint: null,
+      afterPrint: null
+     });
+   });
 
     function showContent(){
       $('#preloader').delay(200).fadeOut('slow');
@@ -595,5 +611,66 @@ jQuery(document).ready(function($) {
     });
 
 
+   $("#downlowd").click(()=>{
+     html2canvas_2();  //下载本页面视图
+   });
+
+    function html2canvas_2() {  //下载
+      //获取截取区域的高度和宽度
+      // var TargetNode = document.querySelector(".no-js")
+      var h = $(document).height()
+      var w = $(document).width()
+      //设置 canvas 画布的宽高 是容器搞度 2倍、为了是图片清晰
+      /**1.创建画布
+       * 2.设置canvas 大小
+       * */
+      var canvas = document.createElement("canvas");
+      //这是画布整体的大小
+      canvas.width = w * 2;
+      canvas.height = h * 2;
+      //这是绘画范围的大小
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      canvas.style.color = "chartreuse"
+      //画布缩小，将图片发大两倍
+      var context = canvas.getContext("2d")
+      context.scale(2, 2)
+      // 再说一次 要截取全部，必须要脱离文档流 position: absolute; 否则只能截取到看到的部分。
+
+      html2canvas($(".no-js"), {
+
+        onrendered: function(canvas) {
+          // 图片导出为 png 格式
+          var type = 'png';
+          var imgData = canvas.toDataURL(type);
+          var _fixType = function(type) {
+            type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+            var r = type.match(/png|jpeg|bmp|gif/)[0];
+            return 'image/' + r;
+          };
+
+          // png 替换 mime type 为了下载
+          imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+          /**
+           * 在本地进行文件保存
+           * @param  {String} data     要保存到本地的图片数据
+           * @param  {String} filename 文件名
+           */
+          var saveFile = function(data, filename) {
+            //创建一个命名空间。是 a 标签
+            var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+            save_link.href = data;
+            save_link.download = filename;
+            var event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            save_link.dispatchEvent(event);
+          };
+          // 下载后的问题名
+          var filename = 'yirenjie_' + (new Date()).getTime() + '.' + type;
+          // download
+          saveFile(imgData, filename);
+        }
+      })
+    }
 
 });
