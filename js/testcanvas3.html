@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>随机像素</title>
+</head>
+
+<body>
+  <canvas id="drawing1" style="border:1px solid black;" width="300" height="300"></canvas>
+  <canvas id="drawing2" style="border:1px solid black;" width="300" height="300"></canvas>
+  <button id="an">随机像素</button>
+  <script type="text/javascript">
+    var drawing1 = document.getElementById('drawing1');
+    var drawing2 = document.getElementById('drawing2');
+    if (drawing1.getContext) {
+      var cxt = drawing1.getContext('2d');
+      var cxt2 = drawing2.getContext('2d');
+      var W = drawing1.width = drawing2.width = 200;
+      var H = drawing1.height = drawing2.height = 200;
+      var str = '小火柴';
+      cxt.textBaseline = 'top'; //设置 文本基线 字体在基线下面
+      var sh = 60;
+      cxt.font = sh + 'px 宋体'
+      var sw = cxt.measureText(str).width; //得到字体显示的大小
+      if (sw > W) {
+        sw = W;
+      }
+      cxt.fillText(str, (W - sw) / 2, (H - sh) / 2, W); //第四个参数 是最大的文本宽度
+      var imageData = cxt.getImageData(0, 0, W, H);
+      cxt.clearRect(0, 0, W, H);
+      var n = 10;
+      document.getElementById("an").onclick = () => {
+        clearTimeout(frame_func); //点之后 在点
+        showData();
+      }
+    }
+
+    var index = 10;
+    var frame_func = null;
+    //随机像素
+    function showData() {
+      frame_func = setTimeout(() => {
+        cxt.clearRect(0, 0, W, H);
+        cxt.putImageData(setData(imageData, 1, ++index), 0, 0);
+        if (index == 10) {
+          clearTimeout(frame_func);
+        } else {
+          showData();
+        }
+      }, 100);
+    }
+
+
+
+    //imageData 图像数据 n是稀释部数 m是取得粒子数
+    //随机取出像素 依然可见轮廓
+    function setData(imageData, n, m) { //这是 按序排序
+      var pixel = []; //放置有数据的像素
+      //将数据里面的粒子
+      for (var i = 0; i < W; i += n) { //没3个点记录一下
+        for (var j = 0; j < H; j += n) {
+          var k = 4 * (i + j * W) //该规则死记硬背  计算的是红色 是最外层的数据
+          if (imageData.data[k + 3] > 0) { //计算的是透明
+            pixel.push(k) //记录下有像素的点
+          }
+        }
+      }
+
+      var filterPixel = []; //过滤的像素
+      if (m && m < pixel.length) {
+        var saveNum = Math.floor(pixel.length / m);
+
+        for (var i = 0; i < saveNum; i++) {
+          filterPixel[i] = pixel[Math.floor(Math.random() * pixel.length)];
+        }
+
+
+      } else {
+        filterPixel = pixel;
+      }
+
+      var newData = cxt2.createImageData(W, H);
+      for (var i = 0; i < filterPixel.length; i++) {
+        newData.data[filterPixel[i]] = imageData.data[filterPixel[i]];
+        newData.data[filterPixel[i] + 1] = imageData.data[filterPixel[i] + 1];
+        newData.data[filterPixel[i] + 2] = imageData.data[filterPixel[i] + 2];
+        newData.data[filterPixel[i] + 3] = imageData.data[filterPixel[i] + 3];
+      }
+
+
+
+
+
+      return newData;
+    }
+  </script>
+
+
+</body>
+
+</html>
