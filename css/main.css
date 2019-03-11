@@ -855,6 +855,7 @@ h2.resp-accordion:hover {
 
 .bottom-p .panel-group .panel {
   border-radius: 0px;
+  color: black;
 }
 
 .bottom-p .panel-heading {
@@ -3019,6 +3020,7 @@ div.ppt {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
+  color:black;
 }
 
 .profile-l .myworkjy .line1,.line2 .f1 {
@@ -3045,4 +3047,5 @@ div.ppt {
 
 .workgroup{
   margin-bottom: 20px;
+  color:black;
 }

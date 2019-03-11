@@ -243,6 +243,7 @@ jQuery(document).ready(function($) {
            $("#portfoliolist img").each(function(index, el) {
               let img = $(el);
               img.attr("src",img.attr("data-src"));
+
            });
         }
 
@@ -431,13 +432,13 @@ jQuery(document).ready(function($) {
     /* ----------------------------- prettyPhoto ---------------------------- */
     /* ---------------------------------------------------------------------- */
 
-    $("a[rel^='portfolio']").prettyPhoto({
-        animation_speed: 'fast', /* fast/slow/normal */
-        social_tools: '',
-        theme: 'pp_default',
-        horizontal_padding: 5,
-        deeplinking: false,
-    });
+    // $("a[rel^='portfolio']").prettyPhoto({
+    //     animation_speed: 'fast', /* fast/slow/normal */
+    //     social_tools: '',
+    //     theme: 'pp_default',
+    //     horizontal_padding: 5,
+    //     deeplinking: false,
+    // });
 
 
 
