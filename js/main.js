@@ -237,7 +237,7 @@ jQuery(document).ready(function($) {
 
 
     $('ul.resp-tabs-list li[class^=tabs-]').click(function() {
-        let  imgLoadCount = 1;
+        let  imgLoadCount = 0;
         var tab_name = $(this).attr('data-tab-name');
         if("portfolio" == tab_name){ //图片懒加载
            $("#portfoliolist img").each(function(index, el) {
