@@ -253,11 +253,13 @@ jQuery(document).ready(function($) {
                  }
                }
            });
+
+           if(imgLoadCount < 3){
+               $("#preloader_1").show();
+               $(".sd").show();
+           }
         }
-        if(imgLoadCount < 3){
-            $("#preloader_1").show();
-            $(".sd").show();
-        }
+
 
         $('.resp-tabs-container').addClass('animated ' + animation_style);
         $('.resp-tabs-container').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
@@ -349,10 +351,6 @@ jQuery(document).ready(function($) {
                             }
                           }
                        }
-
-
-
-
                 });
               }
              ,alwaysTriggerOffsets: false
