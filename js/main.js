@@ -244,6 +244,13 @@ jQuery(document).ready(function($) {
                if(index<config_imgCount){
                  let img = $(el);
                  img.attr("src",img.attr("data-src"));
+                 if (img[0].complete) {
+                   console.log('complete');
+                 }
+                 img[0].onload = function() {
+                   console.log('onload');
+                 }
+
                }
 
            });
