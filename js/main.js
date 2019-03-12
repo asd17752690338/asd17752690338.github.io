@@ -241,8 +241,10 @@ jQuery(document).ready(function($) {
         var tab_name = $(this).attr('data-tab-name');
         if("portfolio" == tab_name){ //图片懒加载
            $("#portfoliolist img").each(function(index, el) {
-              let img = $(el);
-              img.attr("src",img.attr("data-src"));
+               if(index<config_imgCount){
+                 let img = $(el);
+                 img.attr("src",img.attr("data-src"));
+               }
 
            });
         }
@@ -252,6 +254,30 @@ jQuery(document).ready(function($) {
             $('.resp-tabs-container').removeClass('animated ' + animation_style);
         });
 
+        //点击标签 默认加载3张
+        $("#filters li span").click(function(){
+          console.log(this);
+          let filterName = $(this).attr('data-filter');
+          console.log(filterName);
+          let filterNames= filterName.split(" ");
+          if(filterNames.length > 1 ){
+            $("#portfoliolist img").each(function(index, el) {
+                if(index < 3){
+                    $(el).attr('src', $(el).attr('data-src')); //开始替换
+                }
+            });
+          }else{
+            let loadImgName =  "#portfoliolist ." +filterNames[0] +" img";
+            $(loadImgName).each(function(index, el) {
+                if(index < 3){
+                    $(el).attr('src', $(el).attr('data-src')); //开始替换
+                }
+            });
+          }
+
+        });
+
+
         $(".content_2").mCustomScrollbar("destroy");
         $(".content_2").mCustomScrollbar({
             theme: "dark-2",
@@ -260,7 +286,49 @@ jQuery(document).ready(function($) {
                 updateOnContentResize: true,
                 updateOnBrowserResize: true,
                 autoScrollOnFocus: false
-            }
+            },
+            scrollButtons: {
+              enable: true
+            },
+            callbacks:{
+              whileScrolling:function(){
+                // console.log(this.mcs.draggerTop);
+                // alert(this.mcs.draggerTop); 移到100加载一组图片
+                //移动100加载一组图片 并且是根据所选的活跃数加载的
+                var _that =this;
+                $("#filters li span").each(function(index, el) {
+                       let ele =$(el) ;
+                       if(ele.hasClass('active')){
+                          var chooseArr = ele.attr('data-filter').split(" ");
+                          let oldStart = config_imgCount;
+                          var partial = _that.mcs.draggerTop/100;
+                          config_imgCount  = config_imgCount * (partial + 1);
+                          if(chooseArr){
+                            if(chooseArr.length>1){ //有两个
+                              $("#portfoliolist img").each(function(index, el) {
+                                   if(oldStart <= index && index < config_imgCount){
+                                      $(el).attr('src', $(el).attr('data-src')); //开始替换
+                                   }
+                              });
+                            }else{
+                                 var chooseName = chooseArr[0];
+                                 var strName = '#portfoliolist .'+chooseName+' img';
+                                 $(strName).each(function(index, el) {
+                                      if(oldStart <= index && index < config_imgCount){
+                                         $(el).attr('src', $(el).attr('data-src')); //开始替换
+                                      }
+                                 });
+                            }
+                          }
+                       }
+
+
+
+
+                });
+              }
+             ,alwaysTriggerOffsets: false
+    				}
         });
 
         if (tab_name == "contact")
@@ -539,7 +607,6 @@ jQuery(document).ready(function($) {
         return false;
 
     });
-
 
     /* ---------------------------------------------------------------------- */
     /* ---------------------------- icon menu ------------------------------- */
