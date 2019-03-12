@@ -266,25 +266,43 @@ jQuery(document).ready(function($) {
 
         //点击标签 默认加载3张
         $("#filters li span").click(function(){
-          console.log(this);
+          let imgLoadCount = 0;
           let filterName = $(this).attr('data-filter');
-          console.log(filterName);
           let filterNames= filterName.split(" ");
           if(filterNames.length > 1 ){
             $("#portfoliolist img").each(function(index, el) {
                 if(index < 3){
-                    $(el).attr('src', $(el).attr('data-src')); //开始替换
+                    let img = $(el);
+                    img.attr('src', $(el).attr('data-src')); //开始替换
+                    img[0].onload = function(){
+                       imgLoadCount++;
+                       if(imgLoadCount >= 3){
+                       $("#preloader_1").hide();
+                       $(".sd").hide();
+                     }
+                    }
                 }
             });
           }else{
             let loadImgName =  "#portfoliolist ." +filterNames[0] +" img";
             $(loadImgName).each(function(index, el) {
                 if(index < 3){
-                    $(el).attr('src', $(el).attr('data-src')); //开始替换
+                  let img = $(el);
+                  img.attr('src', $(el).attr('data-src')); //开始替换
+                  img[0].onload = function(){
+                     imgLoadCount++;
+                     if(imgLoadCount >= 3){
+                     $("#preloader_1").hide();
+                     $(".sd").hide();
+                   }
+                  }
                 }
             });
           }
-
+          if(imgLoadCount < 3){
+             $("#preloader_1").show();
+             $(".sd").show();
+           }
         });
 
 
