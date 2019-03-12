@@ -237,23 +237,26 @@ jQuery(document).ready(function($) {
 
 
     $('ul.resp-tabs-list li[class^=tabs-]').click(function() {
-
+        let  imgLoadCount = 1;
         var tab_name = $(this).attr('data-tab-name');
         if("portfolio" == tab_name){ //图片懒加载
            $("#portfoliolist img").each(function(index, el) {
                if(index<config_imgCount){
                  let img = $(el);
                  img.attr("src",img.attr("data-src"));
-                 if (img[0].complete) {
-                   console.log('complete');
-                 }
                  img[0].onload = function() {
-                   console.log('onload');
+                    imgLoadCount++;
+                    if(imgLoadCount >= 3){
+                        $("#preloader_1").hide();
+                        $(".sd").hide();
+                    }
                  }
-
                }
-
            });
+        }
+        if(imgLoadCount < 3){
+            $("#preloader_1").show();
+            $(".sd").show();
         }
 
         $('.resp-tabs-container').addClass('animated ' + animation_style);
