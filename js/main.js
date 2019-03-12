@@ -237,11 +237,12 @@ jQuery(document).ready(function($) {
 
 
     $('ul.resp-tabs-list li[class^=tabs-]').click(function() {
+        // alert(111)
         let  imgLoadCount = 0;
         var tab_name = $(this).attr('data-tab-name');
         if("portfolio" == tab_name){ //图片懒加载
            $("#portfoliolist img").each(function(index, el) {
-               if(index<config_imgCount){
+               // if(index<config_imgCount){
                  let img = $(el);
                  img.attr("src",img.attr("data-src"));
                  img[0].onload = function() {
@@ -250,7 +251,7 @@ jQuery(document).ready(function($) {
                         $("#preloader_1").hide();
                         $(".sd").hide();
                     }
-                 }
+                 // }
                }
            });
 
@@ -266,46 +267,47 @@ jQuery(document).ready(function($) {
             $('.resp-tabs-container').removeClass('animated ' + animation_style);
         });
 
-        //点击标签 默认加载3张
-        $("#filters li span").click(function(){
-          let imgLoadCount = 0;
-          let filterName = $(this).attr('data-filter');
-          let filterNames= filterName.split(" ");
-          if(filterNames.length > 1 ){
-            $("#portfoliolist img").each(function(index, el) {
-                if(index < 3){
-                    let img = $(el);
-                    img.attr('src', $(el).attr('data-src')); //开始替换
-                    img[0].onload = function(){
-                       imgLoadCount++;
-                       if(imgLoadCount >= 3){
-                       $("#preloader_1").hide();
-                       $(".sd").hide();
-                     }
-                    }
-                }
-            });
-          }else{
-            let loadImgName =  "#portfoliolist ." +filterNames[0] +" img";
-            $(loadImgName).each(function(index, el) {
-                if(index < 3){
-                  let img = $(el);
-                  img.attr('src', $(el).attr('data-src')); //开始替换
-                  img[0].onload = function(){
-                     imgLoadCount++;
-                     if(imgLoadCount >= 3){
-                     $("#preloader_1").hide();
-                     $(".sd").hide();
-                   }
-                  }
-                }
-            });
-          }
-          if(imgLoadCount < 3){
-             $("#preloader_1").show();
-             $(".sd").show();
-           }
-        });
+        //点击标签 加载全部
+        // $("#filters li span").click(function(){
+        //   alert(111)
+        //   let imgLoadCount = 0;
+        //   let filterName = $(this).attr('data-filter');
+        //   let filterNames= filterName.split(" ");
+        //   if(filterNames.length > 1 ){
+        //     $("#portfoliolist img").each(function(index, el) {
+        //         // if(index < 3){
+        //             let img = $(el);
+        //             img.attr('src', $(el).attr('data-src')); //开始替换
+        //             img[0].onload = function(){  //默认加载全部加载到第三张就开始
+        //                imgLoadCount++;
+        //                if(imgLoadCount >= 3){
+        //                $("#preloader_1").hide();
+        //                $(".sd").hide();
+        //              }
+        //             // }
+        //         }
+        //     });
+        //   }else{
+        //     // let loadImgName =  "#portfoliolist ." +filterNames[0] +" img";
+        //     // $(loadImgName).each(function(index, el) {
+        //     //     if(index < 3){
+        //     //       let img = $(el);
+        //     //       img.attr('src', $(el).attr('data-src')); //开始替换
+        //     //       img[0].onload = function(){
+        //     //          imgLoadCount++;
+        //     //          if(imgLoadCount >= 3){
+        //     //          $("#preloader_1").hide();
+        //     //          $(".sd").hide();
+        //     //        }
+        //     //       }
+        //     //     }
+        //     // });
+        //   }
+        //   if(imgLoadCount < 3){
+        //      $("#preloader_1").show();
+        //      $(".sd").show();
+        //    }
+        // });
 
 
         $(".content_2").mCustomScrollbar("destroy");
@@ -322,36 +324,33 @@ jQuery(document).ready(function($) {
             },
             callbacks:{
               whileScrolling:function(){
-                // console.log(this.mcs.draggerTop);
-                // alert(this.mcs.draggerTop); 移到100加载一组图片
-                //移动100加载一组图片 并且是根据所选的活跃数加载的
                 var _that =this;
-                $("#filters li span").each(function(index, el) {
-                       let ele =$(el) ;
-                       if(ele.hasClass('active')){
-                          var chooseArr = ele.attr('data-filter').split(" ");
-                          let oldStart = config_imgCount;
-                          var partial = _that.mcs.draggerTop/100;
-                          config_imgCount  = config_imgCount * (partial + 1);
-                          if(chooseArr){
-                            if(chooseArr.length>1){ //有两个
-                              $("#portfoliolist img").each(function(index, el) {
-                                   if(oldStart <= index && index < config_imgCount){
-                                      $(el).attr('src', $(el).attr('data-src')); //开始替换
-                                   }
-                              });
-                            }else{
-                                 var chooseName = chooseArr[0];
-                                 var strName = '#portfoliolist .'+chooseName+' img';
-                                 $(strName).each(function(index, el) {
-                                      if(oldStart <= index && index < config_imgCount){
-                                         $(el).attr('src', $(el).attr('data-src')); //开始替换
-                                      }
-                                 });
-                            }
-                          }
-                       }
-                });
+              //   $("#filters li span").each(function(index, el) {
+              //          let ele =$(el) ;
+              //          if(ele.hasClass('active')){
+              //             var chooseArr = ele.attr('data-filter').split(" ");
+              //             let oldStart = config_imgCount;
+              //             var partial = _that.mcs.draggerTop/100;
+              //             config_imgCount  = config_imgCount * (partial + 1);
+              //             if(chooseArr){
+              //               if(chooseArr.length>1){ //有两个
+              //                 $("#portfoliolist img").each(function(index, el) {
+              //                      if(oldStart <= index && index < config_imgCount){
+              //                         $(el).attr('src', $(el).attr('data-src')); //开始替换
+              //                      }
+              //                 });
+              //               }else{
+              //                    var chooseName = chooseArr[0];
+              //                    var strName = '#portfoliolist .'+chooseName+' img';
+              //                    $(strName).each(function(index, el) {
+              //                         if(oldStart <= index && index < config_imgCount){
+              //                            $(el).attr('src', $(el).attr('data-src')); //开始替换
+              //                         }
+              //                    });
+              //               }
+              //             }
+              //          }
+              //   });
               }
              ,alwaysTriggerOffsets: false
     				}
