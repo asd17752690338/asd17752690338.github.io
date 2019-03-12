@@ -246,7 +246,9 @@ jQuery(document).ready(function($) {
                  let img = $(el);
                  img.attr("src",img.attr("data-src"));
                  img[0].onload = function() {
-                    imgLoadCount++;
+                    if(index<3){ //前三张图片
+                       imgLoadCount++;
+                    }
                     if(imgLoadCount >= 3){
                         $("#preloader_1").hide();
                         $(".sd").hide();
