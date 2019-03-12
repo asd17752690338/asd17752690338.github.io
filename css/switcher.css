@@ -28,11 +28,7 @@
 .blue-bg{background:#21BED7;}
 .red-bg{background:#e74c3c;}
 .yellow-bg{background:#ecce4c;}
-/* .bg1{background-image:url("../images/bg/bg1.png");}
-.bg2{background-image:url("../images/bg/bg2.png");}
-.bg3{background-image:url("../images/bg/bg3.png");}
-.bg4{background-image:url("../images/bg/bg4.png");}
-.bg5{background-image:url("../images/bg/bg5.png");} */
+
 .colors-style li a.active{box-shadow:0 0 0 2px #F7F7F7 inset}
 @media only screen and (max-width:1029px){#custumize-style{}
 }
